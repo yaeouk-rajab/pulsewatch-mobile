@@ -8,9 +8,11 @@ foreground or background — deep-linking straight to that incident.
 
 ## Screenshots
 
-![Targets, target detail, incident detail](docs/screenshots/overview.png)
+![Sign in, targets, target detail and an incident](docs/screenshots/overview.png)
 
-_These images are illustrative mockups rendered from this repository's documented screens and API shapes, not captures of a running build. Regenerate or replace them with real captures once the app is running._
+![Server setup](docs/screenshots/server-setup.png)
+
+_Real screens of this app, not mockups. They were rendered through the Expo web build (`react-native-web`) in Chromium against a running pulsewatch backend (PostgreSQL, Redis, a scheduler checking three local HTTP endpoints, one of them failing so it has an open incident), driven with Playwright. A web render is not a native iOS or Android capture: fonts and chrome differ, and `expo-notifications` has no web implementation, so it was stubbed for the capture and push behaviour is not shown. The "Error budget consumed" figure is just what the backend reported for a target that had only existed for a short time._
 
 ## Stack
 
