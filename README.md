@@ -6,6 +6,12 @@ account as the pulsewatch dashboard, shows live target health and incident
 history, and receives a push notification the moment an incident opens —
 foreground or background — deep-linking straight to that incident.
 
+## Screenshots
+
+![Targets, target detail, incident detail](docs/screenshots/overview.png)
+
+_These images are illustrative mockups rendered from this repository's documented screens and API shapes, not captures of a running build. Regenerate or replace them with real captures once the app is running._
+
 ## Stack
 
 - [Expo](https://expo.dev) (SDK 57) + TypeScript, bare enough to use raw
