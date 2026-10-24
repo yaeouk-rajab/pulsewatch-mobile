@@ -28,6 +28,21 @@ import { execFileSync } from "node:child_process";
 /** @type {{ id: string, package: string, expires: string, reason: string }[]} */
 const ALLOWLIST = [
   {
+    id: "GHSA-mrhx-c7xc-m3w5",
+    package: "zod",
+    expires: "2026-11-07",
+    reason:
+      "Zod memory exhaustion on oversized constrained collections (high). " +
+      "The flagged copy is zod 3.25.76 nested under @expo/cli " +
+      "(node_modules/@expo/cli/node_modules/zod), which Expo's own CLI uses " +
+      "for build/dev tooling, so it is never part of the app bundle. The " +
+      "app's own lint tooling resolves a separate zod 4.x; this 3.x copy " +
+      "cannot be fixed: no 3.x release carries a fix (3.25.76 is the " +
+      "latest) and npm audit only offers a downgrade of expo. Re-check " +
+      "before the expiry date: drop this entry once @expo/cli moves to a " +
+      "patched zod, otherwise re-confirm and renew.",
+  },
+  {
     id: "GHSA-86w9-cpqp-85rv",
     package: "node-forge",
     expires: "2026-11-15",
