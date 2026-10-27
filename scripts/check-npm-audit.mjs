@@ -43,22 +43,6 @@ const ALLOWLIST = [
       "patched zod, otherwise re-confirm and renew.",
   },
   {
-    id: "GHSA-86w9-cpqp-85rv",
-    package: "node-forge",
-    expires: "2026-11-15",
-    reason:
-      "RSA PKCS#1 v1.5 signature-verification bypass in node-forge, " +
-      "reached only transitively through expo's own bundled @expo/cli " +
-      "build tooling (expo -> @expo/cli -> @expo/code-signing-certificates " +
-      "-> node-forge). Dev/build-time only — never ships in the app " +
-      "bundle a device runs. No patched node-forge release exists yet " +
-      "(confirmed ecosystem-wide, multiple unrelated projects hit the " +
-      "same advisory at the same time); `npm audit fix --force` only " +
-      "\"fixes\" this by downgrading expo to 44.0.6, a real regression. " +
-      "Re-check before the expiry date: renew if still unfixed upstream, " +
-      "drop this entry the moment a real fix ships.",
-  },
-  {
     id: "GHSA-vfj7-8cjw-p6xm",
     package: "braces",
     expires: "2026-11-15",
