@@ -1,6 +1,12 @@
 import { extractDeepLinkData, incidentRouteFor } from '../push-notifications';
 import type { NotificationResponse } from 'expo-notifications';
 
+// expo-notifications 58 installs a default notification handler as soon as it is
+// imported, and jest-expo's native-module mock hands back subscriptions without
+// remove(); the module under test then replaces that handler and throws. These
+// tests only exercise the pure helpers, so the handler setup is stubbed out.
+jest.mock('expo-notifications', () => ({ setNotificationHandler: jest.fn() }));
+
 function fakeResponse(data: Record<string, unknown> | undefined): NotificationResponse {
   return {
     notification: {

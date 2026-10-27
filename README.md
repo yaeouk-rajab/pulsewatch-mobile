@@ -16,7 +16,7 @@ _Real screens of this app, not mockups. They were rendered through the Expo web 
 
 ## Stack
 
-- [Expo](https://expo.dev) (SDK 57) + TypeScript, bare enough to use raw
+- [Expo](https://expo.dev) (SDK 58) + TypeScript, bare enough to use raw
   native push tokens (no managed Expo push service in the loop — see
   "Push notifications" below)
 - [expo-router](https://docs.expo.dev/router/introduction/) for file-based
@@ -130,36 +130,18 @@ credentials") — stated here rather than implied or papered over.
 
 ## Known issues
 
-`npm audit --omit=dev` currently reports 13 moderate-severity advisories
-(`decode-uri-component`, `uuid`) that are all transitive dependencies of
-`expo`'s and `expo-router`'s own build/CLI tooling
-(`@expo/config-plugins`, `@expo/cli`, `xcode`, ...) — none of it ships in
-the app bundle a device runs. `npm audit fix --force` "fixes" this only
-by downgrading `expo`/`expo-router` to years-old major versions, which
-would be a much larger regression than the advisories themselves. CI's
-`npm audit` step is scoped to `--audit-level=high` for that reason and
-will still fail on anything worse; revisit once SDK 57's own tooling
-picks up the fix upstream.
-
-**One high-severity finding (`node-forge` / `GHSA-86w9-cpqp-85rv`, an RSA
-PKCS#1 v1.5 signature-verification bypass) is explicitly, narrowly
-allowlisted** rather than just relying on `--audit-level=high` — same
-shape as the moderate findings above (reached only transitively through
-`expo`'s own bundled `@expo/cli` build tooling, never shipped in the app
-bundle), confirmed ecosystem-wide with no patched `node-forge` release
-yet as of 2026-10-02. `scripts/check-npm-audit.mjs` runs the real audit
-and fails on anything at/above `--audit-level=high` that ISN'T this one
-advisory, so a genuinely new high/critical finding still blocks CI. The
-allowlist entry itself expires 2026-11-15, after which the check fails
-outright until a human either renews it (if still unfixed upstream) or
-removes it (if a fix finally shipped) — see the script's own header for
-the full reasoning.
-
-**A second high-severity finding (`braces` / `GHSA-vfj7-8cjw-p6xm`, a
-stack-exhaustion DoS on deeply nested brace patterns) is allowlisted the
-same way** — build/test tooling only (via `micromatch`), no patched
-`braces` release exists as of 2026-10-05, and the entry expires
-2026-11-15.
+`npm audit --omit=dev` currently reports one high-severity advisory, `zod`
+(`GHSA-mrhx-c7xc-m3w5`, memory exhaustion on oversized constrained
+collections), reached only through `expo`'s own bundled `@expo/cli` build
+tooling (the nested zod 3.25.76 copy) and never shipped in the app bundle.
+No zod 3.x release has a fix, and `npm audit fix --force` "fixes" it only by
+downgrading `expo`, which would be a much larger regression. It is narrowly
+allowlisted in `scripts/check-npm-audit.mjs` until 2026-11-07, after which
+the check fails outright until a human renews it (if still unfixed upstream)
+or removes it (if `@expo/cli` moved to a patched zod). The script runs the real
+audit and fails on anything else at/above `--audit-level=high`, so a new
+high/critical finding still blocks CI. The moderate `decode-uri-component`
+and `uuid` findings that earlier SDKs carried are gone with SDK 58.
 
 **No branch protection on `main`.** GitHub's branch API reports `main` as
 `"protected": false` — there is no branch protection rule at all, so none

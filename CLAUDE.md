@@ -16,18 +16,16 @@
   here." Either have a human check the repo's Security tab directly, or
   accept the search-for-`dependabot/*`-PRs proxy (weak signal: absence
   of an open Dependabot PR is not proof of no alerts).
-- **`npm audit --omit=dev` will always report ~13 moderate-severity
-  findings** in `expo`/`expo-router`'s own build tooling
-  (`@expo/config-plugins`, `xcode`, transitively `decode-uri-component`/
-  `uuid`) with no non-breaking fix available (`npm audit fix --force`
-  only "fixes" it by downgrading `expo-router` to `5.1.11`/`expo` to
-  `46.0.21` — a real regression, not acceptable). This is why CI scopes
-  the audit to `--audit-level=high` (now via `scripts/check-npm-audit.mjs`,
-  see the node-forge note below). Seeing the moderate list again
-  on a fresh `npm audit --omit=dev` is not a new regression — see
+- **`npm audit --omit=dev` at SDK 58 reports one high advisory: `zod` (GHSA-mrhx-c7xc-m3w5).**
+  It is the nested zod 3.25.76 under `@expo/cli` (Expo build tooling, never in the app bundle) with
+  no 3.x fix, covered by a dated allowlist in `scripts/check-npm-audit.mjs` (expires 2026-11-07);
+  `npm audit fix --force` "fixes" it only by downgrading `expo`, a real regression. CI gates on
+  `--audit-level=high` through that script. The moderate `decode-uri-component`/`uuid` findings of
+  earlier SDKs are gone with SDK 58 (expo-router 58 dropped `query-string`); do not try to override
+  `decode-uri-component` or `query-string` on an older SDK, both break the router at runtime. See
   README's "Known issues".
 - **`npm install`/`npm ci` needs `--legacy-peer-deps`** throughout this
-  SDK 57 tree (expo-router's optional peer on `react-native-worklets`/
+  SDK 58 tree (expo-router's optional peer on `react-native-worklets`/
   `react-dom` conflicts under npm's default resolver). Already reflected
   in `.github/workflows/ci.yml`. Running plain `npm install` locally
   without the flag produces an ERESOLVE error that looks like a real

@@ -16,7 +16,7 @@ updates:
       - dependency-name: "expo-*"
         update-types: ["version-update:semver-major"]
       # jest-expo and eslint-config-expo are versioned with the SDK too: jest-expo 58
-      # needs the SDK 58 react-native and fails every test suite on SDK 57.
+      # needs that SDK's react-native and fails the test suites on an older one.
       - dependency-name: "jest-expo"
         update-types: ["version-update:semver-major"]
       - dependency-name: "eslint-config-expo"

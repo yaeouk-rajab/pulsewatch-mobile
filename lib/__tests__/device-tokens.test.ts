@@ -1,5 +1,6 @@
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
+import { IosAuthorizationStatus } from 'expo-notifications';
 
 import { api } from '../api-client';
 import {
@@ -71,7 +72,7 @@ describe('ensurePushPermission', () => {
   it('treats iOS provisional authorization as granted', async () => {
     (Notifications.getPermissionsAsync as jest.Mock).mockResolvedValue({
       granted: false,
-      ios: { status: Notifications.IosAuthorizationStatus.PROVISIONAL },
+      ios: { status: IosAuthorizationStatus.PROVISIONAL },
     });
     const result = await ensurePushPermission();
     expect(result).toBe(true);
