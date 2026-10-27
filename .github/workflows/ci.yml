@@ -38,18 +38,18 @@ jobs:
 
       # Metro bundle for both native platforms. typecheck, lint and Jest all
       # passed on a Dependabot PR (#27) that moved expo-router to SDK 58 while
-      # the app is on SDK 57, but the bundle could not resolve
+      # the app was on SDK 57, but the bundle could not resolve
       # react-native/setup-env. EXPO_OFFLINE skips the Expo API version check.
       - name: bundle (expo export)
         run: npx expo export --platform android --platform ios --output-dir dist
         env:
           EXPO_OFFLINE: "1"
 
-      # --audit-level=high: at SDK 57, `expo`'s own build/CLI tooling
-      # (@expo/config-plugins and friends — never shipped in the app
-      # bundle) pulls in moderate-severity `decode-uri-component`/`uuid`
-      # advisories with no fix available yet (see README). A high/critical
-      # finding still fails the build; the known moderate ones don't block.
+      # --audit-level=high: at SDK 58, `expo`'s own build/CLI tooling
+      # (@expo/cli and friends — never shipped in the app bundle) pulls in a
+      # zod advisory with no fix available yet (see README), covered by a
+      # dated allowlist in scripts/check-npm-audit.mjs. Any other high/critical
+      # finding still fails the build.
       #
       # scripts/check-npm-audit.mjs wraps the raw `npm audit` check with a
       # small, dated allowlist for one specific high-severity finding

@@ -1,5 +1,6 @@
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
+import { IosAuthorizationStatus } from 'expo-notifications';
 
 import { api } from './api-client';
 import type { DeviceToken, DeviceTokenProvider, DevicePlatform } from './api-types';
@@ -19,7 +20,7 @@ export async function ensurePushPermission(): Promise<boolean> {
   }
   const existing = await Notifications.getPermissionsAsync();
   if (existing.granted) return true;
-  if (existing.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL) {
+  if (existing.ios?.status === IosAuthorizationStatus.PROVISIONAL) {
     return true;
   }
   const requested = await Notifications.requestPermissionsAsync({

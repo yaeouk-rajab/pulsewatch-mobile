@@ -114,7 +114,7 @@ export default function SettingsScreen() {
         keyExtractor={(item) => item.id}
         refreshControl={<RefreshControl refreshing={loading} onRefresh={refresh} />}
         ListEmptyComponent={
-          !loading ? <Text style={styles.emptyText}>No devices registered.</Text> : null
+          !loading ? <Text style={styles.emptyText}>No devices registered.</Text> : undefined
         }
         renderItem={({ item }) => (
           <View style={styles.deviceRow} testID={`device-row-${item.id}`}>
