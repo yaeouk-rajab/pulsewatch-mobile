@@ -31,6 +31,7 @@ _Last updated: 2026-10-27. Maintained during the Dependabot clean-up pass; updat
 ## Time-limited exemptions
 
 - `scripts/check-npm-audit.mjs` allowlist: `node-forge` (GHSA-86w9-cpqp-85rv) and `braces` (GHSA-vfj7-8cjw-p6xm), both transitive via Expo build tooling, `expires` 2026-11-15; the check fails outright after that date.
+- 2026-10-27: the `node-forge` GHSA-86w9-cpqp-85rv allowlist entry was removed from `scripts/check-npm-audit.mjs`: the lockfile now has node-forge 1.4.2, which `npm audit` no longer reports. The `zod` entry stays until 2026-11-07: the nested zod 3.25.76 under @expo/cli has no 3.x fix.
 
 ## Notes
 
