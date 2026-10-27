@@ -15,6 +15,12 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "expo-*"
         update-types: ["version-update:semver-major"]
+      # jest-expo and eslint-config-expo are versioned with the SDK too: jest-expo 58
+      # needs the SDK 58 react-native and fails every test suite on SDK 57.
+      - dependency-name: "jest-expo"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "eslint-config-expo"
+        update-types: ["version-update:semver-major"]
       # react, react-native and their types/presets are chosen by the Expo
       # SDK too, and in 0.x/19.x a minor bump is a breaking change. Patch
       # updates still come through; move these with an SDK upgrade.
