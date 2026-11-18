@@ -1,6 +1,6 @@
 # pulsewatch-mobile
 
-React Native companion app for [pulsewatch](https://github.com/arb-rajab/pulsewatch),
+React Native companion app for [pulsewatch](https://github.com/yaeouk-rajab/pulsewatch),
 a self-hosted uptime/SLO/alerting service. Signs in with the same operator
 account as the pulsewatch dashboard, shows live target health and incident
 history, and receives a push notification the moment an incident opens —
